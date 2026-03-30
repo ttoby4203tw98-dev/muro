@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>短影片腳本｜MURO暮若冰絲情侶睡衣</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1a2e;
+    color: #eaeaea;
+    font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    padding: 32px 24px;
+    min-height: 100vh;
+  }
+
+  /* ── 標題區 ── */
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .header .brand {
+    font-size: 13px;
+    color: #e94560;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+  .tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tag {
+    background: #16213e;
+    border: 1px solid #2a2a4a;
+    color: #a0a0c0;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .tag.highlight { border-color: #e94560; color: #e94560; }
+
+  /* ── 總時長條 ── */
+  .timeline-bar {
+    background: #16213e;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .timeline-label { font-size: 12px; color: #888; white-space: nowrap; }
+  .timeline-track {
+    flex: 1;
+    height: 8px;
+    background: #2a2a4a;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+  }
+  .seg-hook  { width: 10%;  background: #e94560; }
+  .seg-pain  { width: 23.3%; background: #f5a623; }
+  .seg-sol   { width: 43.4%; background: #4ecca3; }
+  .seg-cta   { width: 23.3%; background: #a855f7; }
+  .timeline-total { font-size: 12px; color: #e94560; font-weight: 700; white-space: nowrap; }
+
+  /* ── 腳本卡片 ── */
+  .section-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #666;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    margin-top: 8px;
+  }
+  .script-card {
+    background: #16213e;
+    border-radius: 14px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    border: 1px solid #1f2a45;
+  }
+  .card-hook  { border-left: 4px solid #e94560; }
+  .card-pain  { border-left: 4px solid #f5a623; }
+  .card-sol   { border-left: 4px solid #4ecca3; }
+  .card-cta   { border-left: 4px solid #a855f7; }
+
+  .card-header {
+    padding: 14px 20px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1f2a45;
+  }
+  .card-header .seg-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .card-hook .seg-name  { color: #e94560; }
+  .card-pain .seg-name  { color: #f5a623; }
+  .card-sol  .seg-name  { color: #4ecca3; }
+  .card-cta  .seg-name  { color: #a855f7; }
+
+  .card-header .seg-goal {
+    font-size: 11px;
+    color: #777;
+    text-align: right;
+    max-width: 55%;
+    line-height: 1.4;
+  }
+
+  .card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .col-scene, .col-script {
+    padding: 16px 20px;
+  }
+  .col-scene { border-right: 1px solid #1f2a45; }
+  .col-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: #555;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .col-scene .col-label { color: #4ecca3; }
+  .col-script .col-label { color: #f5a623; }
+  .col-scene p, .col-script p {
+    font-size: 14px;
+    line-height: 1.9;
+    color: #ccc;
+  }
+  .col-script p {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .pause { color: #e94560; }
+
+  .card-footer {
+    padding: 10px 20px;
+    background: #0f1829;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .time-label { font-size: 11px; color: #555; }
+  .time-bar {
+    flex: 1;
+    height: 4px;
+    background: #2a2a4a;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .time-fill { height: 100%; border-radius: 2px; }
+  .card-hook  .time-fill { background: #e94560; width: 10%; }
+  .card-pain  .time-fill { background: #f5a623; width: 33.3%; }
+  .card-sol   .time-fill { background: #4ecca3; width: 76.7%; }
+  .card-cta   .time-fill { background: #a855f7; width: 100%; }
+  .time-val { font-size: 12px; font-weight: 700; color: #eaeaea; }
+
+  /* ── 字幕建議 ── */
+  .subtitle-section {
+    background: #16213e;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid #1f2a45;
+  }
+  .subtitle-section h3 {
+    font-size: 13px;
+    color: #f5a623;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    background: #0f1829;
+    color: #777;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 8px 12px;
+    text-align: left;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1f2a45;
+    vertical-align: middle;
+  }
+  td:first-child { color: #888; font-size: 12px; }
+  td:nth-child(2) { color: #fff; font-weight: 500; }
+  td:last-child { font-size: 18px; letter-spacing: 4px; }
+  tr:last-child td { border-bottom: none; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+
+  /* ── 拍攝注意事項 ── */
+  .tips-section {
+    background: #16213e;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid #1f2a45;
+  }
+  .tips-section h3 {
+    font-size: 13px;
+    color: #4ecca3;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+  .tip-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #1f2a45;
+    align-items: flex-start;
+  }
+  .tip-item:last-child { border-bottom: none; }
+  .tip-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #0f1829;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .tip-content strong {
+    display: block;
+    font-size: 13px;
+    color: #eaeaea;
+    margin-bottom: 3px;
+  }
+  .tip-content span { font-size: 12px; color: #888; line-height: 1.6; }
+
+  /* ── 頁尾 ── */
+  .footer {
+    text-align: center;
+    padding-top: 16px;
+    border-top: 1px solid #1f2a45;
+    color: #444;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  .footer span { color: #666; }
+
+  @media (max-width: 600px) {
+    .card-body { grid-template-columns: 1fr; }
+    .col-scene { border-right: none; border-bottom: 1px solid #1f2a45; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 標題區 -->
+<div class="header">
+  <div class="brand">MURO 暮若 · 居</div>
+  <h1>冰絲無痕情侶睡衣套裝<br>30 秒短影片腳本</h1>
+  <div class="tags">
+    <span class="tag highlight">IG Reels</span>
+    <span class="tag highlight">FB Reels</span>
+    <span class="tag highlight">蝦皮短影片</span>
+    <span class="tag">9:16 直式</span>
+    <span class="tag">單人出鏡</span>
+    <span class="tag">NT$388 兩件套</span>
+  </div>
+</div>
+
+<!-- 總時長條 -->
+<div class="timeline-bar">
+  <span class="timeline-label">0s</span>
+  <div class="timeline-track">
+    <div class="seg-hook" title="Hook 0-3s"></div>
+    <div class="seg-pain" title="痛點 3-10s"></div>
+    <div class="seg-sol"  title="解方 10-23s"></div>
+    <div class="seg-cta"  title="CTA 23-30s"></div>
+  </div>
+  <span class="timeline-total">30s</span>
+</div>
+
+<!-- 腳本卡片 -->
+<div class="section-title">📋 腳本內容</div>
+
+<!-- 第一段：Hook -->
+<div class="script-card card-hook">
+  <div class="card-header">
+    <div class="seg-name">🎬 第一段：Hook 開場</div>
+    <div class="seg-goal">目標：前 3 秒讓人停止滑走</div>
+  </div>
+  <div class="card-body">
+    <div class="col-scene">
+      <div class="col-label">🎥 畫面描述</div>
+      <p>主播拿著睡衣套裝，用手捏起布料貼臉頰。表情閉眼享受，誇張一點。近距離鏡頭，背景是臥室或床鋪。</p>
+    </div>
+    <div class="col-script">
+      <div class="col-label">🗣 台詞</div>
+      <p>「天啊<span class="pause">……</span><br>這個摸起來<span class="pause">……</span><br>也太涼了吧？！」</p>
+    </div>
+  </div>
+  <div class="card-footer">
+    <span class="time-label">⏱</span>
+    <div class="time-bar"><div class="time-fill"></div></div>
+    <span class="time-val">0 – 3 秒</span>
+  </div>
+</div>
+
+<!-- 第二段：放大痛點 -->
+<div class="script-card card-pain">
+  <div class="card-header">
+    <div class="seg-name">😩 第二段：放大痛點</div>
+    <div class="seg-goal">目標：讓觀眾說「對！這就是我！」</div>
+  </div>
+  <div class="card-body">
+    <div class="col-scene">
+      <div class="col-label">🎥 畫面描述</div>
+      <p>主播皺眉搖頭，拿起一件普通棉質睡衣對比。背景可看到電扇或冷氣開著。表情誇張，帶出「悶死了」的感覺。</p>
+    </div>
+    <div class="col-script">
+      <div class="col-label">🗣 台詞</div>
+      <p>「夏天睡覺<span class="pause">……</span><br>穿棉的悶死人。<br>半夜一直踢被子<span class="pause">……</span><br>睡衣黏在身上<span class="pause">……</span><br>根本睡不著。」</p>
+    </div>
+  </div>
+  <div class="card-footer">
+    <span class="time-label">⏱</span>
+    <div class="time-bar"><div class="time-fill"></div></div>
+    <span class="time-val">3 – 10 秒</span>
+  </div>
+</div>
+
+<!-- 第三段：產品解方 -->
+<div class="script-card card-sol">
+  <div class="card-header">
+    <div class="seg-name">✨ 第三段：產品解方</div>
+    <div class="seg-goal">目標：清楚展示商品如何解決痛點</div>
+  </div>
+  <div class="card-body">
+    <div class="col-scene">
+      <div class="col-label">🎥 畫面描述</div>
+      <p>拿出整套睡衣展示，捏起布料展示薄度和柔軟度。然後特寫衣服側縫處，用手指沿著邊緣滑過，暗示「無痕」。最後鏡頭拉開，展示兩色（卡其、霧藍）。整體動作放慢，讓觀眾看清楚布料質感。</p>
+    </div>
+    <div class="col-script">
+      <div class="col-label">🗣 台詞</div>
+      <p>「這個是冰絲的<span class="pause">……</span><br>摸到就知道差在哪。<br>不黏身、不悶熱<span class="pause">……</span><br>而且它沒有縫線！<br>穿整晚都舒服。<br>卡其跟霧藍<span class="pause">……</span><br>兩件套 388 而已。」</p>
+    </div>
+  </div>
+  <div class="card-footer">
+    <span class="time-label">⏱</span>
+    <div class="time-bar"><div class="time-fill"></div></div>
+    <span class="time-val">10 – 23 秒</span>
+  </div>
+</div>
+
+<!-- 第四段：CTA -->
+<div class="script-card card-cta">
+  <div class="card-header">
+    <div class="seg-name">🛒 第四段：CTA 行動呼籲</div>
+    <div class="seg-goal">目標：引導點擊購買</div>
+  </div>
+  <div class="card-body">
+    <div class="col-scene">
+      <div class="col-label">🎥 畫面描述</div>
+      <p>主播微笑看鏡頭，一手舉著睡衣套裝，另一手指向畫面下方（蝦皮連結位置）。表情輕鬆親切，最後定格微笑。</p>
+    </div>
+    <div class="col-script">
+      <div class="col-label">🗣 台詞</div>
+      <p>「蝦皮搜尋 MURO 暮若<span class="pause">……</span><br>點下面連結就到。<br>庫存不多<span class="pause">……</span><br>喜歡要快喔！」</p>
+    </div>
+  </div>
+  <div class="card-footer">
+    <span class="time-label">⏱</span>
+    <div class="time-bar"><div class="time-fill"></div></div>
+    <span class="time-val">23 – 30 秒</span>
+  </div>
+</div>
+
+<!-- 字幕建議 -->
+<div class="subtitle-section">
+  <h3>💬 字幕建議</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>段落</th>
+        <th>建議字幕文字</th>
+        <th>表情符號</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="dot" style="background:#e94560"></span>Hook 開場</td>
+        <td>這個摸起來也太涼了吧？！</td>
+        <td>🧊😱</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:#f5a623"></span>放大痛點</td>
+        <td>夏天穿棉的…半夜睡不著</td>
+        <td>😩🌡️</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:#4ecca3"></span>產品解方</td>
+        <td>冰絲無縫線｜兩件套 NT$388</td>
+        <td>✨💤</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:#a855f7"></span>CTA</td>
+        <td>蝦皮搜尋 MURO 暮若｜庫存不多！</td>
+        <td>⬇️🛒</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 拍攝注意事項 -->
+<div class="tips-section">
+  <h3>📸 拍攝注意事項</h3>
+
+  <div class="tip-item">
+    <div class="tip-icon">🛏️</div>
+    <div class="tip-content">
+      <strong>背景佈置</strong>
+      <span>臥室或床鋪為背景，整齊不雜亂。可擺一顆抱枕或薄毯，強化「睡前場景」。避免太華麗的背景，親切感最重要。</span>
+    </div>
+  </div>
+
+  <div class="tip-item">
+    <div class="tip-icon">👗</div>
+    <div class="tip-content">
+      <strong>穿著風格</strong>
+      <span>出鏡時穿素色居家服或T恤，清爽自然。妝容維持自然感，不要太正式。讓 45+ 受眾覺得「這就是我平常的樣子」。</span>
+    </div>
+  </div>
+
+  <div class="tip-item">
+    <div class="tip-icon">🎁</div>
+    <div class="tip-content">
+      <strong>道具準備</strong>
+      <span>準備卡其和霧藍兩色各一套。可準備一件對比用的普通棉質睡衣（第二段用）。摺疊整齊，展示時效果更好。</span>
+    </div>
+  </div>
+
+  <div class="tip-item">
+    <div class="tip-icon">💡</div>
+    <div class="tip-content">
+      <strong>燈光建議</strong>
+      <span>自然光最佳，靠窗拍攝。若室內打光，選暖白光（4000K），讓布料顏色顯色準確。避免強烈陰影影響布料質感呈現。</span>
+    </div>
+  </div>
+
+  <div class="tip-item">
+    <div class="tip-icon">📱</div>
+    <div class="tip-content">
+      <strong>拍攝技巧</strong>
+      <span>用三腳架固定手機，9:16 直式構圖。捏布料和展示無縫線的動作要放慢，讓觀眾看清楚。台詞之間的「……」停頓要實際停，節奏不要趕。</span>
+    </div>
+  </div>
+</div>
+
+<!-- 頁尾 -->
+<div class="footer">
+  <p>商品：MURO 暮若 冰絲無痕情侶睡衣套裝 &nbsp;｜&nbsp; 售價 NT$388 &nbsp;｜&nbsp; <span>2026.03.30</span></p>
+</div>
+
+</body>
+</html>
